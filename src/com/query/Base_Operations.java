@@ -1,9 +1,8 @@
 package com.query;
 
-import com.database.Database;
+import com.dao.inter.AbstractDAO;
 import com.model.Product;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,9 +12,9 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Base_Operations {
+public class Base_Operations extends AbstractDAO {
 
-    private Connection con = null;
+    private Connection con = getConnect();
 
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
@@ -191,24 +190,4 @@ public class Base_Operations {
         }
         return null;
     }
-
-    public Base_Operations() {
-
-        //jdbc:mysql://localhost:3306/test
-      //  String url = "jdbc:mysql://" + Database.HOST + ":" + Database.PORT + "/" + Database.DB_NAME + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-
-        try {
-            Class.forName("org.h2.Driver");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Driver not found");
-        }
-
-        try {
-            con = DriverManager.getConnection(Database.DB_URL, Database.DB_USERNAME, Database.DB_PASSWORD);
-            System.out.println("Connection successful");
-        } catch (SQLException ex) {
-            System.out.println("Connection failed");
-        }
-    }
-
 }
